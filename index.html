@@ -1,1681 +1,616 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>A little something for you 🎁</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>The Cat Archives — Birthday Edition</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ============================================= -->
-  <!-- STAGE 1: LOCKED GIFT SCREEN                     -->
-  <!-- The ONLY screen visible for now. Everything     -->
-  <!-- else (crossword, gift opening, etc.) will be     -->
-  <!-- added as separate <section> "pages" later and    -->
-  <!-- revealed one by one via script.js.               -->
-  <!-- ============================================= -->
+<!-- GLOBAL SOUND TOGGLE -->
+<button id="birthdaySoundToggle" class="birthday-sound-toggle"
+        type="button" aria-label="Toggle birthday website sound" aria-pressed="true">
+  🔊
+</button>
 
-  <div class="scrapbook-bg">
+<div id="app">
 
-    <!-- soft floating doodles scattered around the page -->
-    <div class="doodles" aria-hidden="true">
-      <span class="doodle star star-1">✦</span>
-      <span class="doodle star star-2">✧</span>
-      <span class="doodle star star-3">✦</span>
-      <span class="doodle star star-4">✧</span>
-      <span class="doodle heart heart-1">♡</span>
-      <span class="doodle heart heart-2">♡</span>
-      <span class="doodle swirl swirl-1">〰️</span>
-      <span class="doodle flower flower-1">✿</span>
-      <span class="doodle flower flower-2">❀</span>
-      <span class="doodle cloud cloud-1">☁</span>
+  <!-- =====================================================
+       STAGE 1 — MEME CAT GUITAR BATTLE
+       ===================================================== -->
+  <main id="guitarStage" class="stage-shell">
+    <div class="concert-bg" aria-hidden="true">
+      <i class="beam b1"></i><i class="beam b2"></i><i class="beam b3"></i>
+      <div class="notes-bg">♪ ♫ ♬ ♪</div>
     </div>
 
-    <!-- ===================== PAGE 1: GIFT SCREEN ===================== -->
-    <main id="page-gift" class="page page-gift">
-
-      <div class="gift-card">
-
-        <!-- little washi tape strips for scrapbook feel -->
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right" aria-hidden="true"></span>
-
-        <p class="eyebrow-text">A little something for you&hellip;</p>
-
-        <!-- ============ GIFT BOX (pure CSS/SVG) ============ -->
-        <div class="gift-wrap" id="giftBox" role="button" tabindex="0" aria-label="Locked gift box, complete the game to unlock">
-
-          <div class="sparkles" aria-hidden="true">
-            <span class="sparkle s1">✦</span>
-            <span class="sparkle s2">✧</span>
-            <span class="sparkle s3">✦</span>
-            <span class="sparkle s4">✧</span>
-            <span class="sparkle s5">✦</span>
-          </div>
-
-          <div class="gift-box">
-            <div class="gift-shadow"></div>
-
-            <!-- lock badge -->
-            <div class="lock-badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-                <rect x="4.5" y="10.5" width="15" height="10" rx="2.2" fill="#fff8ee" stroke="#7a6a52" stroke-width="1.4"/>
-                <path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" stroke="#7a6a52" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-                <circle cx="12" cy="15" r="1.5" fill="#7a6a52"/>
-                <path d="M12 16.4V18" stroke="#7a6a52" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
-            </div>
-
-            <div class="box-lid">
-              <div class="box-lid-top"></div>
-              <div class="ribbon-h-lid"></div>
-              <div class="ribbon-v-lid"></div>
-            </div>
-
-            <div class="box-body">
-              <div class="ribbon-h-body"></div>
-              <div class="ribbon-v-body"></div>
-              <div class="box-shine"></div>
-            </div>
-
-            <div class="bow">
-              <div class="bow-loop bow-loop-left"></div>
-              <div class="bow-loop bow-loop-right"></div>
-              <div class="bow-center"></div>
-              <div class="bow-tail bow-tail-left"></div>
-              <div class="bow-tail bow-tail-right"></div>
-            </div>
-          </div>
-        </div>
-        <!-- ============ END GIFT BOX ============ -->
-
-        <p class="locked-line">But you can't open it yet 👀</p>
-        <p class="hint-line">There's one tiny challenge first.</p>
-
-        <button id="playBtn" class="play-btn" type="button" aria-label="Play the game">
-          Play the Game <span aria-hidden="true">🧩</span>
-        </button>
-
-        <!-- cute "nice try" message, hidden until gift is clicked -->
-        <p id="nudgeMsg" class="nudge-msg" aria-live="polite"></p>
-
+    <section class="screen active" id="introScreen">
+      <div class="panel">
+        <div class="eyebrow">THE CAT ARCHIVES · FILE 01</div>
+        <div class="hero-guitar">🎸</div>
+        <h1>THE BIRTHDAY GUITAR<br><em>HAS BEEN STOLEN.</em></h1>
+        <div class="cat-band"><span>😼🎸</span><span>😾🎸</span><span>😹🎸</span></div>
+        <p>🐱 “If you want your birthday surprise back...”</p>
+        <p class="strong">🎸 “YOU MUST DEFEAT US IN A GUITAR BATTLE!”</p>
+        <button class="btn primary" id="acceptBtn">🎸 ACCEPT THE CHALLENGE</button>
       </div>
+    </section>
 
-    </main>
-
-    <!-- ===================== PAGE 2: CROSSWORD ===================== -->
-    <main id="page-crossword" class="page page-crossword hidden">
-
-      <section class="cw-card">
-
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right cw-tape-right" aria-hidden="true"></span>
-
-        <header class="cw-header">
-          <p class="cw-eyebrow">One tiny challenge before your gift&hellip;</p>
-          <h1 class="cw-title">Bengali Stories &amp; Detectives <span aria-hidden="true">🧩📚</span></h1>
-          <p class="cw-subtitle">Fill in every answer to unlock what's waiting for you.</p>
-        </header>
-
-        <div class="cw-progress" aria-hidden="true">
-          <div class="cw-progress-bar" id="cwProgressBar"></div>
-        </div>
-        <p class="cw-progress-label"><span id="cwFilledCount">0</span> / <span id="cwTotalCount">0</span> answers filled</p>
-
-        <!-- active clue banner, always visible above the grid while playing -->
-        <div class="cw-active-clue" id="cwActiveClue">
-          <span class="cw-active-num" id="cwActiveNumber">—</span>
-          <span class="cw-active-dir" id="cwActiveDir">Across</span>
-          <p class="cw-active-text" id="cwActiveText">Tap a cell to begin.</p>
-        </div>
-
-        <!-- scrollable grid viewport -->
-        <div class="cw-grid-viewport">
-          <div class="cw-grid" id="cwGrid" role="grid" aria-label="Crossword grid"></div>
-        </div>
-
-        <div class="cw-toolbar">
-          <button type="button" class="cw-tool-btn" id="cwHintBtn">
-            💡 Need a hint? <span class="cw-hint-count" id="cwHintCount">3</span>
-          </button>
-          <button type="button" class="cw-tool-btn cw-check-btn" id="cwCheckBtn">
-            Check My Answers
-          </button>
-        </div>
-
-        <p class="cw-feedback" id="cwFeedback" aria-live="polite"></p>
-
-        <!-- clue lists below the grid, tap to jump -->
-        <div class="cw-clue-lists">
-          <div class="cw-clue-col">
-            <h2 class="cw-clue-heading">Across</h2>
-            <ol class="cw-clue-list" id="cwAcrossList"></ol>
-          </div>
-          <div class="cw-clue-col">
-            <h2 class="cw-clue-heading">Down</h2>
-            <ol class="cw-clue-list" id="cwDownList"></ol>
-          </div>
-        </div>
-
-      </section>
-
-    </main>
-
-    <!-- ============== PAGE 3: CROSSWORD SUCCESS (leads into Stage 4) ============== -->
-    <main id="page-success" class="page page-success hidden">
-
-      <div class="success-card">
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right" aria-hidden="true"></span>
-
-        <div class="success-doodles" aria-hidden="true">
-          <span class="success-doodle sd1">📖</span>
-          <span class="success-doodle sd2">🔍</span>
-          <span class="success-doodle sd3">✦</span>
-          <span class="success-doodle sd4">🖋️</span>
-          <span class="success-doodle sd5">✧</span>
-        </div>
-
-        <h1 class="success-title">YOU ACTUALLY DID IT?! 😭🎉</h1>
-        <p class="success-line">Okay, Bengali story master. You earned the present.</p>
-
-        <button type="button" class="unlock-btn" id="toGiftOpenBtn">
-          See Your Gift <span aria-hidden="true">🎁</span>
-        </button>
-      </div>
-
-    </main>
-
-    <!-- ===================== STAGE 4: OPEN THE GIFT ===================== -->
-    <main id="page-gift-open" class="page page-gift-open hidden">
-
-      <section class="giftopen-card" id="giftOpenCard">
-
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right giftopen-tape-right" aria-hidden="true"></span>
-
-        <!-- scattered celebration doodles around the card -->
-        <div class="giftopen-doodles" aria-hidden="true">
-          <span class="go-doodle god1">✦</span>
-          <span class="go-doodle god2">♡</span>
-          <span class="go-doodle god3">✧</span>
-          <span class="go-doodle god4">✿</span>
-          <span class="go-doodle god5">🎈</span>
-          <span class="go-doodle god6">✦</span>
-          <span class="go-doodle god7">❀</span>
-          <span class="go-doodle god8">🎉</span>
-        </div>
-
-        <p class="giftopen-eyebrow">You made it through the puzzle&hellip;</p>
-        <h1 class="giftopen-title">Okay&hellip; this one is actually for you <span aria-hidden="true">🎁</span></h1>
-        <p class="giftopen-sub">You've come this far, so I think you deserve to know what's inside.</p>
-
-        <!-- ============ BIG GIFT (pure CSS, reuses stage-1 gift parts, scaled up) ============ -->
-        <div class="big-gift-scale">
-          <div class="gift-wrap big-gift" id="bigGift">
-
-            <div class="sparkles" id="giftSparkles" aria-hidden="true">
-              <span class="sparkle s1">✦</span>
-              <span class="sparkle s2">✧</span>
-              <span class="sparkle s3">✦</span>
-              <span class="sparkle s4">✧</span>
-              <span class="sparkle s5">✦</span>
-            </div>
-
-            <div class="gift-box" id="bigGiftBox">
-              <div class="gift-shadow"></div>
-
-              <!-- inside content, hidden behind the lid until it's opened -->
-              <div class="inside-reveal" id="insideReveal" aria-hidden="true">
-                <span class="inside-glow"></span>
-                <span class="inside-emoji">🎉</span>
-                <span class="inside-note">for you</span>
-              </div>
-
-              <div class="box-lid" id="bigGiftLid">
-                <div class="box-lid-top"></div>
-                <div class="ribbon-h-lid"></div>
-                <div class="ribbon-v-lid"></div>
-              </div>
-
-              <div class="box-body">
-                <div class="ribbon-h-body"></div>
-                <div class="ribbon-v-body"></div>
-                <div class="box-shine"></div>
-              </div>
-
-              <div class="bow" id="bigGiftBow">
-                <div class="bow-loop bow-loop-left"></div>
-                <div class="bow-loop bow-loop-right"></div>
-                <div class="bow-center"></div>
-                <div class="bow-tail bow-tail-left"></div>
-                <div class="bow-tail bow-tail-right"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- ============ END BIG GIFT ============ -->
-
-        <button type="button" class="open-gift-btn" id="openGiftBtn">
-          Open It <span aria-hidden="true">🎀</span>
-        </button>
-
-        <!-- revealed only after the gift is opened -->
-        <div class="post-open hidden" id="postOpenContent">
-          <p class="post-open-message">Surprise! There's more waiting for you&hellip;</p>
-          <button type="button" class="lets-go-btn" id="letsGoBtn">
-            Let's Go <span aria-hidden="true">→</span>
-          </button>
-        </div>
-
-      </section>
-
-    </main>
-
-    <!-- ===================== STAGE 5: OUR LITTLE MEMORIES ===================== -->
-    <main id="page-stage5" class="page page-stage5 hidden">
-
-      <section class="mem-outer" id="stage5Card">
-
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right mem-tape-right" aria-hidden="true"></span>
-
-        <!-- floating doodles around the header -->
-        <div class="mem-header-doodles" aria-hidden="true">
-          <span class="mem-hdoodle mhd1">✦</span>
-          <span class="mem-hdoodle mhd2">♡</span>
-          <span class="mem-hdoodle mhd3">✧</span>
-          <span class="mem-hdoodle mhd4">✿</span>
-          <span class="mem-hdoodle mhd5">❀</span>
-        </div>
-
-        <header class="mem-header">
-          <h1 class="mem-title">A little place for our memories&hellip;</h1>
-          <p class="mem-subtitle">Because apparently, I've collected way too many moments of us.<br>And yes, I'm keeping all of them. <span aria-hidden="true">♡</span></p>
-        </header>
-
-        <!-- three tiny clickable stickers, each reveals a hidden note -->
-        <div class="mem-stickers">
-          <button type="button" class="mem-sticker sticker-heart" data-note="heart" aria-label="Tap for a hidden note">
-            <span aria-hidden="true">❤️</span>
-          </button>
-          <button type="button" class="mem-sticker sticker-star" data-note="star" aria-label="Tap for a hidden note">
-            <span aria-hidden="true">⭐</span>
-          </button>
-          <button type="button" class="mem-sticker sticker-flower" data-note="flower" aria-label="Tap for a hidden note">
-            <span aria-hidden="true">🌸</span>
-          </button>
-
-          <!-- sticky notes, positioned near their sticker, hidden until clicked -->
-          <div class="sticky-note note-heart hidden" id="noteHeart" role="note">
-            <p>Somehow, you became one of my favourite people.</p>
-          </div>
-          <div class="sticky-note note-star hidden" id="noteStar" role="note">
-            <p>Out of all the moments I could've saved&hellip; these are some of my favourites.</p>
-          </div>
-          <div class="sticky-note note-flower hidden" id="noteFlower" role="note">
-            <p>And I'd happily make a thousand more memories with you.</p>
-          </div>
-        </div>
-
-        <!-- ====== POLAROID MEMORY BOARD ======
-             TO REPLACE PHOTOS LATER: just swap the files in /images/
-             named memory1.jpg .. memory6.jpg for your own — no code
-             changes needed. Captions can be edited directly below. -->
-        <div class="mem-board" id="memBoard">
-
-          <button type="button" class="memory-card mc-1" data-caption="Glimpse of your childhood! ♡">
-            <span class="mc-tape mc-tape-blue" aria-hidden="true"></span>
-            <span class="mc-doodle" aria-hidden="true">✦</span>
-            <span class="mc-photo">
-              <img src="memory1.jpeg" alt="A memory — replace with your own photo" loading="lazy">
-            </span>
-            <span class="mc-caption"> Glimpse of your childhood! <span aria-hidden="true">♡</span></span>
-          </button>
-
-          <button type="button" class="memory-card mc-2" data-caption="silly you!!">
-            <span class="mc-tape mc-tape-pink" aria-hidden="true"></span>
-            <span class="mc-doodle" aria-hidden="true">✧</span>
-            <span class="mc-photo">
-              <img src="memory2.jpeg" alt="A memory — replace with your own photo" loading="lazy">
-            </span>
-            <span class="mc-caption"> silly you !!</span>
-          </button>
-
-          <button type="button" class="memory-card mc-3" data-caption="You being prettiest">
-            <span class="mc-tape mc-tape-gold" aria-hidden="true"></span>
-            <span class="mc-doodle" aria-hidden="true">✿</span>
-            <span class="mc-photo">
-              <img src="memory3.jpg" alt="A memory — replace with your own photo" loading="lazy">
-            </span>
-            <span class="mc-caption">You being prettiest</span>
-          </button>
-
-          <button type="button" class="memory-card mc-4" data-caption="One of my favourite memories">
-            <span class="mc-tape mc-tape-blue" aria-hidden="true"></span>
-            <span class="mc-doodle" aria-hidden="true">★</span>
-            <span class="mc-photo">
-              <img src="memory4.png" alt="A memory — replace with your own photo" loading="lazy">
-            </span>
-            <span class="mc-caption">One of my favourite memories</span>
-          </button>
-
-          <button type="button" class="memory-card mc-5" data-caption="dramatic as always">
-            <span class="mc-tape mc-tape-pink" aria-hidden="true"></span>
-            <span class="mc-doodle" aria-hidden="true">❀</span>
-            <span class="mc-photo">
-              <img src="memory5.jpg" alt="A memory — replace with your own photo" loading="lazy">
-            </span>
-            <span class="mc-caption">dramatic as always</span>
-          </button>
-
-          <button type="button" class="memory-card mc-6" data-caption="Another one for the scrapbook">
-            <span class="mc-tape mc-tape-gold" aria-hidden="true"></span>
-            <span class="mc-doodle" aria-hidden="true">✦</span>
-            <span class="mc-photo">
-              <img src="memory6.jpeg" alt="A memory — replace with your own photo" loading="lazy">
-            </span>
-            <span class="mc-caption">Another one for the scrapbook</span>
-          </button>
-
-        </div>
-        <!-- ====== END MEMORY BOARD ====== -->
-
-        <div class="mem-footer">
-          <p class="mem-footer-line">And these are only a few of them&hellip;</p>
-          <p class="mem-footer-line mem-footer-line2">There are still so many moments waiting to be added here. <span aria-hidden="true">♡</span></p>
-
-          <button type="button" class="next-memory-btn" id="nextMemoryBtn">
-            Next Memory <span aria-hidden="true">→</span>
-          </button>
-        </div>
-
-      </section>
-
-      <!-- enlarged-photo overlay -->
-      <div class="mem-lightbox hidden" id="memLightbox">
-        <div class="mem-lightbox-backdrop" id="memLightboxBackdrop"></div>
-        <div class="mem-lightbox-card" id="memLightboxCard">
-          <button type="button" class="mem-lightbox-close" id="memLightboxClose" aria-label="Close photo">✕</button>
-          <span class="mem-lightbox-tape" aria-hidden="true"></span>
-          <img class="mem-lightbox-img" id="memLightboxImg" src="" alt="">
-          <p class="mem-lightbox-caption" id="memLightboxCaption"></p>
+    <section class="screen" id="returningScreen">
+      <div class="panel">
+        <div class="hero-guitar">🏆🎸</div>
+        <h1>WELCOME BACK,<br><em>ROCKSTAR.</em></h1>
+        <div class="big-emojis">😿 💫 😵‍💫 💫 🙀</div>
+        <p>The Meme Cats still remember the beating you gave them...</p>
+        <p>You've already defeated the Guitar Battle once.</p>
+        <div class="button-row">
+          <button class="btn primary" id="playAgainBtn">🎸 PLAY AGAIN</button>
+          <button class="btn ghost" id="skipBtn">🔓 SKIP TO THE NEXT STAGE</button>
         </div>
       </div>
+    </section>
 
-    </main>
-
-    <!-- ===================== STAGE 6: A FEW THINGS I LOVE ABOUT YOU ===================== -->
-    <main id="page-stage6" class="page page-stage6 hidden">
-
-      <section class="garden-outer" id="gardenCard">
-
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right garden-tape-right" aria-hidden="true"></span>
-
-        <!-- floating doodles around the header -->
-        <div class="garden-header-doodles" aria-hidden="true">
-          <span class="mem-hdoodle mhd1">✿</span>
-          <span class="mem-hdoodle mhd2">✦</span>
-          <span class="mem-hdoodle mhd3">❀</span>
-          <span class="mem-hdoodle mhd4">✧</span>
-          <span class="mem-hdoodle mhd5">✿</span>
+    <section class="screen" id="instructionsScreen">
+      <div class="panel">
+        <h1>HOW TO <em>OUTPLAY</em><br>THE CATS.</h1>
+        <p>Notes fall toward the <b>HIT ZONE</b>. Hit the matching key at the right moment.</p>
+        <div class="key-preview">
+          <span class="k0">A</span><span class="k1">S</span><span class="k2">D</span><span class="k3">F</span>
         </div>
+        <p>🔥 Build combos for higher scores!</p>
+        <p>💀 Miss too many notes and the cats gain power!</p>
+        <p class="mobile-note">📱 On mobile, use the big touch buttons.</p>
+        <div class="button-row"><button class="btn primary" id="startBtn">LET'S ROCK 🎸🔥</button><button class="btn ghost replay-exit" id="quitReplayInstructions">← QUIT REPLAY</button></div>
+      </div>
+    </section>
 
-        <header class="garden-header">
-          <h1 class="garden-title">Okay&hellip; here comes the cheesy part.</h1>
-          <p class="garden-subtitle">There are probably a million little things I could say&hellip;<br>but these are some of the things I love most about you. <span aria-hidden="true">♡</span></p>
+    <section class="screen" id="roundScreen">
+      <div class="panel round-panel">
+        <div class="round-icon" id="roundIcon">🎸</div>
+        <h1 id="roundTitle"></h1>
+        <p id="roundDescription"></p>
+        <div class="button-row"><button class="btn primary" id="roundStartBtn">START ROUND 🔥</button><button class="btn ghost replay-exit" id="quitReplayRound">← QUIT REPLAY</button></div>
+      </div>
+    </section>
+
+    <section class="screen game-screen" id="gameScreen">
+      <div class="game-shell">
+        <header class="hud">
+          <div class="hud-card"><small>SCORE</small><b id="scoreValue">000000</b></div>
+          <div class="hud-card"><small>COMBO</small><b id="comboValue">🔥 x0</b></div>
+          <button id="quitBtn" class="quit-btn" aria-label="Quit">✕</button>
         </header>
 
-        <p class="garden-hint">Tap a flower to find out why <span aria-hidden="true">🌷</span></p>
-
-        <!-- ====== FLOWER GARDEN ======
-             TO EDIT MESSAGES LATER: just change the text inside each
-             .flower-note <p> below — no other changes needed. -->
-        <div class="flower-garden" id="flowerGarden">
-
-          <div class="flower-item" data-flower="1">
-            <div class="flower-sway sway-a">
-              <button type="button" class="flower-visual flower-md" style="--petal-color:#f0b7c4; --center-color:#e29aac;" aria-label="Tap to reveal a little reason">
-                <span class="flower-petals count-5">
-                  <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
-                  <span class="flower-center"></span>
-                </span>
-                <span class="flower-stem" aria-hidden="true"></span>
-              </button>
-            </div>
-            <div class="flower-note hidden" id="note-flower-1">
-              <span class="flower-note-tape" aria-hidden="true"></span>
-              <p>you are the most annoying yet the best thing that ever happened to me.</p>
-            </div>
-          </div>
-
-          <div class="flower-item" data-flower="2">
-            <div class="flower-sway sway-b">
-              <button type="button" class="flower-visual flower-sm" style="--petal-color:#a9cde6; --center-color:#8fb9d6;" aria-label="Tap to reveal a little reason">
-                <span class="flower-petals count-6">
-                  <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
-                  <span class="flower-center"></span>
-                </span>
-                <span class="flower-stem" aria-hidden="true"></span>
-              </button>
-            </div>
-            <div class="flower-note hidden" id="note-flower-2">
-              <span class="flower-note-tape" aria-hidden="true"></span>
-              <p>you always understand me, even when I don't make sense.</p>
-            </div>
-          </div>
-
-          <div class="flower-item" data-flower="3">
-            <div class="flower-sway sway-c">
-              <button type="button" class="flower-visual flower-lg" style="--petal-color:#f6da8f; --center-color:#e3c273;" aria-label="Tap to reveal a little reason">
-                <span class="flower-petals count-5">
-                  <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
-                  <span class="flower-center"></span>
-                </span>
-                <span class="flower-stem" aria-hidden="true"></span>
-              </button>
-            </div>
-            <div class="flower-note hidden" id="note-flower-3">
-              <span class="flower-note-tape" aria-hidden="true"></span>
-              <p>I love the way we do the most nonsense things together.</p>
-            </div>
-          </div>
-
-          <div class="flower-item" data-flower="4">
-            <div class="flower-sway sway-a">
-              <button type="button" class="flower-visual flower-md" style="--petal-color:#f5c9a3; --center-color:#e0a874;" aria-label="Tap to reveal a little reason">
-                <span class="flower-petals count-6">
-                  <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
-                  <span class="flower-center"></span>
-                </span>
-                <span class="flower-stem" aria-hidden="true"></span>
-              </button>
-            </div>
-            <div class="flower-note hidden" id="note-flower-4">
-              <span class="flower-note-tape" aria-hidden="true"></span>
-              <p>you might not like to console others, but when it comes to me I love how you leave everything behind for me.</p>
-            </div>
-          </div>
-
-          <div class="flower-item" data-flower="5">
-            <div class="flower-sway sway-b">
-              <button type="button" class="flower-visual flower-sm" style="--petal-color:#eda2a2; --center-color:#d97f7f;" aria-label="Tap to reveal a little reason">
-                <span class="flower-petals count-5">
-                  <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
-                  <span class="flower-center"></span>
-                </span>
-                <span class="flower-stem" aria-hidden="true"></span>
-              </button>
-            </div>
-            <div class="flower-note hidden" id="note-flower-5">
-              <span class="flower-note-tape" aria-hidden="true"></span>
-              <p>you always the sacred diary of my heart.</p>
-            </div>
-          </div>
-
-          <div class="flower-item" data-flower="6">
-            <div class="flower-sway sway-c">
-              <button type="button" class="flower-visual flower-lg" style="--petal-color:#d3c2ea; --center-color:#b6a0d9;" aria-label="Tap to reveal a little reason">
-                <span class="flower-petals count-6">
-                  <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
-                  <span class="flower-center"></span>
-                </span>
-                <span class="flower-stem" aria-hidden="true"></span>
-              </button>
-            </div>
-            <div class="flower-note hidden" id="note-flower-6">
-              <span class="flower-note-tape" aria-hidden="true"></span>
-              <p>whenever the life gets tough, you are there for me in your own special way.</p>
-            </div>
-          </div>
-
-          <div class="flower-item" data-flower="7">
-            <div class="flower-sway sway-a">
-              <button type="button" class="flower-visual flower-sm" style="--petal-color:#f0b7c4; --center-color:#e29aac;" aria-label="Tap to reveal a little reason">
-                <span class="flower-petals count-6">
-                  <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
-                  <span class="flower-center"></span>
-                </span>
-                <span class="flower-stem" aria-hidden="true"></span>
-              </button>
-            </div>
-            <div class="flower-note hidden" id="note-flower-7">
-              <span class="flower-note-tape" aria-hidden="true"></span>
-              <p>you don't show everything you feel , but I know you care.</p>
-            </div>
-          </div>
-
-          <div class="flower-item" data-flower="8">
-            <div class="flower-sway sway-b">
-              <button type="button" class="flower-visual flower-md" style="--petal-color:#a9cde6; --center-color:#8fb9d6;" aria-label="Tap to reveal a little reason">
-                <span class="flower-petals count-5">
-                  <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
-                  <span class="flower-center"></span>
-                </span>
-                <span class="flower-stem" aria-hidden="true"></span>
-              </button>
-            </div>
-            <div class="flower-note hidden" id="note-flower-8">
-              <span class="flower-note-tape" aria-hidden="true"></span>
-              <p>And I love the person I get to be when I'm with you.</p>
-            </div>
-          </div>
-
-          <!-- the odd one out — looks like an unopened bud, not obviously clickable -->
-          <div class="flower-item flower-item-secret" data-flower="secret">
-            <div class="flower-sway sway-c">
-              <button type="button" class="flower-visual flower-secret" id="secretFlowerBtn" aria-label="A curious little bud">
-                <span class="flower-bud"></span>
-                <span class="flower-stem" aria-hidden="true"></span>
-              </button>
-            </div>
-          </div>
-
-        </div>
-        <!-- ====== END FLOWER GARDEN ====== -->
-
-        <div class="garden-footer">
-          <p class="garden-progress" id="gardenProgress">
-            <span id="flowerCount">0</span> little reasons discovered <span aria-hidden="true">♡</span>
-          </p>
-
-          <button type="button" class="more-btn hidden" id="stage6NextBtn">
-            There's More <span aria-hidden="true">→</span>
-          </button>
+        <div class="meter-wrap">
+          <div class="meter-labels"><b>😎 PLAYER</b><b>😼 MEME CATS</b></div>
+          <div class="meter"><div id="battleFill"></div><i>⚡</i></div>
         </div>
 
-      </section>
+        <div id="catReaction" class="cat-reaction">😼 Ready to lose, human?</div>
 
-      <!-- special hidden-flower overlay -->
-      <div class="secret-overlay hidden" id="secretOverlay">
-        <div class="secret-backdrop" id="secretBackdrop"></div>
-        <div class="secret-card" id="secretCard">
-          <button type="button" class="secret-close" id="secretClose" aria-label="Close">✕</button>
-          <span class="secret-tape" aria-hidden="true"></span>
-          <div class="secret-hearts" id="secretHearts" aria-hidden="true"></div>
-          <p class="secret-line1" id="secretLine1">And honestly&hellip;</p>
-          <p class="secret-line2 hidden" id="secretLine2">I could keep making flowers for you forever and still run out of petals before I run out of things I love about you. <span aria-hidden="true">♡</span></p>
+        <div class="battle-layout">
+          <div class="side-cat">😼<small>🎸</small></div>
+          <div id="lanes" class="lanes">
+            <div class="lane" data-lane="0"><span>A</span></div>
+            <div class="lane" data-lane="1"><span>S</span></div>
+            <div class="lane" data-lane="2"><span>D</span></div>
+            <div class="lane" data-lane="3"><span>F</span></div>
+            <div class="hit-zone"></div>
+          </div>
+          <div class="side-cat delay">😾<small>🎸</small></div>
+        </div>
+
+        <div id="statusLine" class="status-line">Get ready...</div>
+
+        <div class="touch-controls">
+          <button data-lane="0" class="touch k0">A</button>
+          <button data-lane="1" class="touch k1">S</button>
+          <button data-lane="2" class="touch k2">D</button>
+          <button data-lane="3" class="touch k3">F</button>
         </div>
       </div>
+    </section>
 
-    </main>
+    <section class="screen" id="failScreen">
+      <div class="panel">
+        <div class="big-emojis">😹 🐱 😈</div>
+        <h1>THE CATS HAVE WON...<br><em>FOR NOW.</em></h1>
+        <p id="failMessage"></p>
+        <button class="btn primary" id="rematchBtn">🔄 REMATCH</button>
+      </div>
+    </section>
 
-    <!-- ===================== STAGE 7: OUR LITTLE STORY ===================== -->
-    <main id="page-stage7" class="page page-stage7 hidden">
+    <section class="screen" id="victoryScreen">
+      <div id="s3-confetti" class="confetti"></div>
+      <div class="panel victory">
+        <div class="hero-guitar">🎸✨</div>
+        <div class="big-emojis">😿 💫 😵 💫 🙀</div>
+        <h1>YOU HAVE DEFEATED<br><em>THE MEME CATS.</em></h1>
+        <p class="strong">🎸 The Birthday Guitar has been recovered!</p>
+        <p><b>Congratulations, Rockstar.</b></p>
+        <p>You survived the Meme Cat Guitar Battle...</p>
+        <p>and successfully played your way to the next birthday surprise. ❤️🎂🎸</p>
+        <button class="btn primary" id="unlockBtn">🔓 UNLOCK THE NEXT STAGE</button>
+      </div>
+    </section>
+  </main>
 
-      <section class="story-outer" id="storyCard">
+  <!-- =====================================================
+       STAGE 2 — THE ACTUAL CAT DELIVERS THE GIFT
+       ===================================================== -->
+  <audio id="wingFlapAudio" src="assets\audio\freesound_community-bird-flapping-wings-6046 (1).mp3" preload="auto" loop></audio>
+    <main id="giftStage" class="gift-stage hidden" aria-hidden="true">
+    <div class="paper-bg"></div>
+    <div class="doodle d1">✦</div><div class="doodle d2">♫</div>
+    <div class="doodle d3">♡</div><div class="doodle d4">✦</div>
 
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right story-tape-right" aria-hidden="true"></span>
-
-        <div class="story-header-doodles" aria-hidden="true">
-          <span class="mem-hdoodle mhd1">✦</span>
-          <span class="mem-hdoodle mhd2">♡</span>
-          <span class="mem-hdoodle mhd3">✧</span>
-          <span class="mem-hdoodle mhd4">✿</span>
-          <span class="mem-hdoodle mhd5">❀</span>
-        </div>
-
-        <!-- ============ INTRO: CLOSED BOOK ============ -->
-        <div class="story-intro" id="storyIntro">
-
-          <p class="story-eyebrow">Wait&hellip; we haven't talked about this part yet.</p>
-
-          <div class="story-book-wrap">
-            <div class="story-book" id="storyBookGraphic">
-              <div class="book-pages-peek" aria-hidden="true"></div>
-              <div class="book-cover" id="bookCover">
-                <span class="book-cover-doodle" aria-hidden="true">✦</span>
-                <span class="book-ribbon" aria-hidden="true"></span>
-                <span class="book-title-doodle" aria-hidden="true">our story</span>
-              </div>
-            </div>
-            <div class="story-open-sparkles" id="storyOpenSparkles" aria-hidden="true"></div>
-          </div>
-
-          <p class="story-line">Every story has its chapters.</p>
-          <p class="story-line story-line-emph">And somehow, ours became one of my favourite ones. <span aria-hidden="true">♡</span></p>
-
-          <button type="button" class="open-story-btn" id="openStoryBtn">
-            Open Our Story <span aria-hidden="true">→</span>
-          </button>
-        </div>
-        <!-- ============ END INTRO ============ -->
-
-        <!-- ============ PAGINATED CHAPTERS ============
-             TO EDIT CHAPTERS LATER: everything lives in the
-             STORY_DATA array near the top of script.js — titles,
-             text, image paths (images/story1.jpg .. story6.jpg)
-             and tape/doodle styling all live in one place. -->
-        <div class="story-pages hidden" id="storyPages">
-
-          <div class="chapter-card" id="chapterCard">
-            <span class="chapter-tape" id="chapterTape" aria-hidden="true"></span>
-            <span class="chapter-doodle" id="chapterDoodle" aria-hidden="true">✦</span>
-
-            <!-- hidden secret heart — only revealed (via JS) on one specific chapter -->
-            <button type="button" class="chapter-secret-heart hidden" id="chapterSecretHeart" aria-label="A tiny doodle">
-              <span aria-hidden="true">♡</span>
-            </button>
-            <div class="chapter-secret-note hidden" id="chapterSecretNote">
-              <span class="chapter-secret-tape" aria-hidden="true"></span>
-              <p>Psst&hellip;<br>If you're reading this&hellip;<br>I'm really glad you're my sister. <span aria-hidden="true">♡</span></p>
-            </div>
-
-            <p class="chapter-label" id="chapterLabel">Chapter 1</p>
-            <h2 class="chapter-title" id="chapterTitle">&nbsp;</h2>
-
-            <div class="chapter-body">
-              <span class="chapter-photo">
-                <img id="chapterImg" src="" alt="">
-              </span>
-              <p class="chapter-text" id="chapterText"></p>
-            </div>
-          </div>
-
-          <div class="story-controls">
-            <button type="button" class="story-nav-btn story-prev-btn" id="storyPrevBtn">
-              <span aria-hidden="true">←</span> Previous
-            </button>
-            <p class="story-page-indicator" id="storyPageIndicator">Page 1 / 6</p>
-            <button type="button" class="story-nav-btn story-next-btn" id="storyNextBtn">
-              Next Page <span aria-hidden="true">→</span>
-            </button>
-          </div>
-
-        </div>
-        <!-- ============ END PAGINATED CHAPTERS ============ -->
-
-        <!-- ============ FINAL PAGE ============ -->
-        <div class="story-final hidden" id="storyFinal">
-
-          <div class="final-doodles" aria-hidden="true">
-            <span class="final-doodle fd1">✦</span>
-            <span class="final-doodle fd2">♡</span>
-            <span class="final-doodle fd3">✧</span>
-            <span class="final-doodle fd4">✿</span>
-          </div>
-
-          <span class="chapter-tape final-tape" aria-hidden="true"></span>
-
-          <h2 class="final-title">TO BE CONTINUED&hellip;</h2>
-          <p class="final-line">Because I don't want our story to be something I only remember.</p>
-          <p class="final-line">I want there to be many, many more pages.</p>
-          <p class="final-signature">with you. <span aria-hidden="true">♡</span></p>
-
-          <div class="story-controls story-controls-final">
-            <button type="button" class="story-nav-btn" id="storyBackBtn">
-              <span aria-hidden="true">←</span> Previous
-            </button>
-            <button type="button" class="turn-page-btn" id="turnPageBtn">
-              Turn the Page <span aria-hidden="true">→</span>
-            </button>
-          </div>
-        </div>
-        <!-- ============ END FINAL PAGE ============ -->
-
-      </section>
-
-    </main>
-
-    <!-- ===================== STAGE 8: IF I COULD GIVE YOU... ===================== -->
-    <main id="page-stage8" class="page page-stage8 hidden">
-
-      <section class="gifts-outer" id="giftsCard">
-
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right gifts-tape-right" aria-hidden="true"></span>
-
-        <div class="story-header-doodles" aria-hidden="true">
-          <span class="mem-hdoodle mhd1">✦</span>
-          <span class="mem-hdoodle mhd2">♡</span>
-          <span class="mem-hdoodle mhd3">✧</span>
-          <span class="mem-hdoodle mhd4">✿</span>
-          <span class="mem-hdoodle mhd5">❀</span>
-        </div>
-
-        <header class="gifts-header">
-          <h1 class="gifts-title">Okay&hellip; imagine I could wrap feelings into presents.</h1>
-          <p class="gifts-subtitle">Here's what I'd give you. <span aria-hidden="true">♡</span></p>
-          <p class="gifts-hint">Pick one <span aria-hidden="true">🎁</span></p>
-        </header>
-
-        <!-- ====== GIFT DESK ======
-             TO EDIT MESSAGES LATER: everything lives in the
-             GIFT_DATA array near the top of script.js. -->
-        <div class="gifts-desk" id="giftsDesk">
-
-          <div class="gift-item gi-1" data-gift="1">
-            <button type="button" class="gift-trigger" aria-label="Open this gift">
-              <div class="gift-wrap mini-gift" id="mg-wrap-1" style="--gift-box:#f0b7c4; --gift-box-dark:#e29aac; --gift-ribbon:#e3c273; --gift-ribbon-dark:#c8a24f;">
-                <div class="sparkles" id="mg-sparkles-1" aria-hidden="true">
-                  <span class="sparkle s1">✦</span><span class="sparkle s2">✧</span><span class="sparkle s3">✦</span><span class="sparkle s4">✧</span><span class="sparkle s5">✦</span>
-                </div>
-                <div class="gift-box" id="mg-box-1">
-                  <div class="gift-shadow"></div>
-                  <div class="box-lid" id="mg-lid-1">
-                    <div class="box-lid-top"></div>
-                    <div class="ribbon-h-lid"></div>
-                  </div>
-                  <div class="box-body">
-                    <div class="ribbon-h-body"></div>
-                    <div class="box-shine"></div>
-                  </div>
-                  <div class="bow" id="mg-bow-1">
-                    <div class="bow-loop bow-loop-left"></div>
-                    <div class="bow-loop bow-loop-right"></div>
-                    <div class="bow-center"></div>
-                    <div class="bow-tail bow-tail-left"></div>
-                    <div class="bow-tail bow-tail-right"></div>
-                  </div>
-                </div>
-              </div>
-            </button>
-            <p class="gift-label">Something you need</p>
-          </div>
-
-          <div class="gift-item gi-2" data-gift="2">
-            <button type="button" class="gift-trigger" aria-label="Open this gift">
-              <div class="gift-wrap mini-gift" id="mg-wrap-2" style="--gift-box:#a9cde6; --gift-box-dark:#8fb9d6; --gift-ribbon:#f0b7c4; --gift-ribbon-dark:#e29aac;">
-                <div class="sparkles" id="mg-sparkles-2" aria-hidden="true">
-                  <span class="sparkle s1">✦</span><span class="sparkle s2">✧</span><span class="sparkle s3">✦</span><span class="sparkle s4">✧</span><span class="sparkle s5">✦</span>
-                </div>
-                <div class="gift-box" id="mg-box-2">
-                  <div class="gift-shadow"></div>
-                  <div class="box-lid" id="mg-lid-2">
-                    <div class="box-lid-top"></div>
-                    <div class="ribbon-h-lid"></div>
-                  </div>
-                  <div class="box-body">
-                    <div class="ribbon-h-body"></div>
-                    <div class="box-shine"></div>
-                  </div>
-                  <div class="bow" id="mg-bow-2">
-                    <div class="bow-loop bow-loop-left"></div>
-                    <div class="bow-loop bow-loop-right"></div>
-                    <div class="bow-center"></div>
-                    <div class="bow-tail bow-tail-left"></div>
-                    <div class="bow-tail bow-tail-right"></div>
-                  </div>
-                </div>
-              </div>
-            </button>
-            <p class="gift-label">A little reminder</p>
-          </div>
-
-          <div class="gift-item gi-3" data-gift="3">
-            <button type="button" class="gift-trigger" aria-label="Open this gift">
-              <div class="gift-wrap mini-gift" id="mg-wrap-3" style="--gift-box:#f6da8f; --gift-box-dark:#e3c273; --gift-ribbon:#a9cde6; --gift-ribbon-dark:#8fb9d6;">
-                <div class="sparkles" id="mg-sparkles-3" aria-hidden="true">
-                  <span class="sparkle s1">✦</span><span class="sparkle s2">✧</span><span class="sparkle s3">✦</span><span class="sparkle s4">✧</span><span class="sparkle s5">✦</span>
-                </div>
-                <div class="gift-box" id="mg-box-3">
-                  <div class="gift-shadow"></div>
-                  <div class="box-lid" id="mg-lid-3">
-                    <div class="box-lid-top"></div>
-                    <div class="ribbon-h-lid"></div>
-                  </div>
-                  <div class="box-body">
-                    <div class="ribbon-h-body"></div>
-                    <div class="box-shine"></div>
-                  </div>
-                  <div class="bow" id="mg-bow-3">
-                    <div class="bow-loop bow-loop-left"></div>
-                    <div class="bow-loop bow-loop-right"></div>
-                    <div class="bow-center"></div>
-                    <div class="bow-tail bow-tail-left"></div>
-                    <div class="bow-tail bow-tail-right"></div>
-                  </div>
-                </div>
-              </div>
-            </button>
-            <p class="gift-label">One for the bad days</p>
-          </div>
-
-          <div class="gift-item gi-4" data-gift="4">
-            <button type="button" class="gift-trigger" aria-label="Open this gift">
-              <div class="gift-wrap mini-gift" id="mg-wrap-4" style="--gift-box:#b7dcc0; --gift-box-dark:#9fc7a9; --gift-ribbon:#f0b7c4; --gift-ribbon-dark:#e29aac;">
-                <div class="sparkles" id="mg-sparkles-4" aria-hidden="true">
-                  <span class="sparkle s1">✦</span><span class="sparkle s2">✧</span><span class="sparkle s3">✦</span><span class="sparkle s4">✧</span><span class="sparkle s5">✦</span>
-                </div>
-                <div class="gift-box" id="mg-box-4">
-                  <div class="gift-shadow"></div>
-                  <div class="box-lid" id="mg-lid-4">
-                    <div class="box-lid-top"></div>
-                    <div class="ribbon-h-lid"></div>
-                  </div>
-                  <div class="box-body">
-                    <div class="ribbon-h-body"></div>
-                    <div class="box-shine"></div>
-                  </div>
-                  <div class="bow" id="mg-bow-4">
-                    <div class="bow-loop bow-loop-left"></div>
-                    <div class="bow-loop bow-loop-right"></div>
-                    <div class="bow-center"></div>
-                    <div class="bow-tail bow-tail-left"></div>
-                    <div class="bow-tail bow-tail-right"></div>
-                  </div>
-                </div>
-              </div>
-            </button>
-            <p class="gift-label">For your pocket</p>
-          </div>
-
-          <div class="gift-item gi-5" data-gift="5">
-            <button type="button" class="gift-trigger" aria-label="Open this gift">
-              <div class="gift-wrap mini-gift" id="mg-wrap-5" style="--gift-box:#d3c2ea; --gift-box-dark:#b6a0d9; --gift-ribbon:#e3c273; --gift-ribbon-dark:#c8a24f;">
-                <div class="sparkles" id="mg-sparkles-5" aria-hidden="true">
-                  <span class="sparkle s1">✦</span><span class="sparkle s2">✧</span><span class="sparkle s3">✦</span><span class="sparkle s4">✧</span><span class="sparkle s5">✦</span>
-                </div>
-                <div class="gift-box" id="mg-box-5">
-                  <div class="gift-shadow"></div>
-                  <div class="box-lid" id="mg-lid-5">
-                    <div class="box-lid-top"></div>
-                    <div class="ribbon-h-lid"></div>
-                  </div>
-                  <div class="box-body">
-                    <div class="ribbon-h-body"></div>
-                    <div class="box-shine"></div>
-                  </div>
-                  <div class="bow" id="mg-bow-5">
-                    <div class="bow-loop bow-loop-left"></div>
-                    <div class="bow-loop bow-loop-right"></div>
-                    <div class="bow-center"></div>
-                    <div class="bow-tail bow-tail-left"></div>
-                    <div class="bow-tail bow-tail-right"></div>
-                  </div>
-                </div>
-              </div>
-            </button>
-            <p class="gift-label">Just because</p>
-          </div>
-
-          <!-- gift 6 — visually larger, with a little heart seal -->
-          <div class="gift-item gi-6" data-gift="6">
-            <button type="button" class="gift-trigger" aria-label="Open the important gift">
-              <div class="gift-wrap mini-gift mini-gift-important" id="mg-wrap-6" style="--gift-box:#e29aac; --gift-box-dark:#c97a8f; --gift-ribbon:#e3c273; --gift-ribbon-dark:#c8a24f;">
-                <span class="gift-seal" aria-hidden="true">♡</span>
-                <div class="sparkles" id="mg-sparkles-6" aria-hidden="true">
-                  <span class="sparkle s1">✦</span><span class="sparkle s2">✧</span><span class="sparkle s3">✦</span><span class="sparkle s4">✧</span><span class="sparkle s5">✦</span>
-                </div>
-                <div class="gift-box" id="mg-box-6">
-                  <div class="gift-shadow"></div>
-                  <div class="box-lid" id="mg-lid-6">
-                    <div class="box-lid-top"></div>
-                    <div class="ribbon-h-lid"></div>
-                  </div>
-                  <div class="box-body">
-                    <div class="ribbon-h-body"></div>
-                    <div class="box-shine"></div>
-                  </div>
-                  <div class="bow" id="mg-bow-6">
-                    <div class="bow-loop bow-loop-left"></div>
-                    <div class="bow-loop bow-loop-right"></div>
-                    <div class="bow-center"></div>
-                    <div class="bow-tail bow-tail-left"></div>
-                    <div class="bow-tail bow-tail-right"></div>
-                  </div>
-                </div>
-              </div>
-            </button>
-            <p class="gift-label gift-label-important">Open last <span aria-hidden="true">♡</span></p>
-          </div>
-
-        </div>
-        <!-- ====== END GIFT DESK ====== -->
-
-        <div class="gifts-footer">
-          <p class="gifts-progress" id="giftsProgress">
-            Gifts opened: <span id="giftsOpenedCount">0</span> / 6
-          </p>
-          <p class="gifts-followup hidden" id="giftsFollowup">BUT THERE'S ONE MORE THING&hellip;</p>
-          <button type="button" class="gifts-continue-btn hidden" id="giftsContinueBtn">
-            Continue <span aria-hidden="true">→</span>
-          </button>
-        </div>
-
-      </section>
-
-      <!-- reusable card overlay — filled in dynamically per gift -->
-      <div class="gift-card-overlay hidden" id="giftCardOverlay">
-        <div class="gift-card-backdrop" id="giftCardBackdrop"></div>
-        <div class="gift-card" id="giftCardEl">
-          <span class="gift-card-tape" aria-hidden="true"></span>
-          <p class="gift-card-title" id="giftCardTitle"></p>
-          <div class="gift-card-message" id="giftCardMessage"></div>
-          <div class="gift-card-heart hidden" id="giftCardHeart" aria-hidden="true">🤍</div>
-          <div class="gift-card-hearts" id="giftCardHearts" aria-hidden="true"></div>
-          <p class="gift-card-footer hidden" id="giftCardFooter"></p>
-          <p class="gift-card-signature hidden" id="giftCardSignature"></p>
-          <button type="button" class="put-back-btn" id="putBackBtn">put it back <span aria-hidden="true">♡</span></button>
-        </div>
+    <section id="giftArrival" class="gift-screen active">
+      <div class="arrival-copy">
+        <p id="arrivalLine1">Wait...</p>
+        <p id="arrivalLine2">Someone has arrived with your reward. 👀</p>
       </div>
 
-    </main>
+      <div id="catFlight" class="cat-flight">
+        <div class="wing wing-left">🪽</div>
+        <img src="meowl.png" class="real-cat" alt="Your birthday cat">
+        <div class="wing wing-right">🪽</div>
+        <div class="gift-carry">🎁</div>
+      </div>
 
-    <!-- ===================== STAGE 9: OUR LITTLE SOUNDTRACK ===================== -->
-    <main id="page-stage9" class="page page-stage9 hidden">
+      <div id="speechBubble" class="speech-bubble">
+        <p id="speechText">mrrp.</p>
+        <button id="nextSpeechBtn" class="tiny-next">next →</button>
+      </div>
 
-      <section class="song-outer" id="songCard">
+      <button id="landGiftBtn" class="btn primary arrival-btn hidden">🎁 DELIVER THE GIFT</button>
+    </section>
 
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right song-tape-right" aria-hidden="true"></span>
+    <section id="giftOpenScreen" class="gift-screen">
+      <div class="gift-scene">
+        <img src="meowl.png" class="gift-cat" alt="Your birthday cat guarding the gift">
+        <div class="placed-gift" id="placedGift">
+          <div class="gift-lid">🎀</div>
+          <div class="gift-box">🎁</div>
+        </div>
+        <div class="gift-glow"></div>
+      </div>
+      <p class="whisper">there's something inside...</p>
+      <button id="openGiftBtn" class="btn primary">tap the gift 🎁</button>
+    </section>
 
-        <div class="story-header-doodles" aria-hidden="true">
-          <span class="mem-hdoodle mhd1">♪</span>
-          <span class="mem-hdoodle mhd2">♡</span>
-          <span class="mem-hdoodle mhd3">♫</span>
-          <span class="mem-hdoodle mhd4">✧</span>
-          <span class="mem-hdoodle mhd5">✦</span>
+    <section id="cakeWishScreen" class="gift-screen cake-wish-screen" aria-hidden="true">
+      <div class="cake-stage">
+        <div class="cake-note">🎂 A LITTLE BIRTHDAY MOMENT</div>
+        <div class="cake-plate"></div>
+        <div class="cake" id="birthdayCake" aria-label="Birthday cake with lit candles">
+          <div class="candle c1"><span class="flame"></span></div>
+          <div class="candle c2"><span class="flame"></span></div>
+          <div class="candle c3"><span class="flame"></span></div>
+          <div class="cake-top">♡ happy birthday ♡</div>
+          <div class="cake-body"></div>
+          <div class="cake-icing"></div>
+        </div>
+        <div class="wish-copy">
+          <p class="wish-title">Make a wish. ✨</p>
+          <p class="wish-subtitle">The candles are waiting...</p>
+          <div class="blow-meter" aria-hidden="true"><span id="blowProgress"></span></div>
+          <button id="blowCandlesBtn" class="btn primary" type="button">💨 BLOW THE CANDLES</button>
+          <button id="skipBlowBtn" class="btn ghost" type="button">lightly tap to blow ✨</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="birthdayCardScreen" class="gift-screen">
+      <article class="birthday-card">
+        <div class="tape"></div>
+        <div class="sticker">✦</div>
+        <p class="card-line reveal">Okay...</p>
+        <p class="card-line reveal emph">This one is actually from me. ❤️</p>
+        <p class="card-line reveal">Press play.</p>
+
+        <div class="player">
+          <div class="player-title">♫ for your birthday</div>
+          <button id="playBtn" class="play-btn" aria-label="Play birthday song">▶</button>
+          <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="seek"><div id="seekFill"></div></div>
+          <small id="songHint">Add <code>birthday-song.mp3</code> beside this website to play your song.</small>
+          <audio id="bdaySong" preload="none" src="assets/sounds/bday wish.mp3"></audio>
         </div>
 
-        <!-- tiny hidden music-note doodle, blended among the header decorations -->
-        <button type="button" class="song-hidden-doodle" id="songHiddenDoodle" aria-label="A tiny doodle">♪</button>
-        <div class="song-hidden-note hidden" id="songHiddenNote">
-          <span class="song-hidden-tape" aria-hidden="true"></span>
-          <p>Psst&hellip;<br>If this song ever comes on randomly,<br>you better think of me. <span aria-hidden="true">🙂</span></p>
+        <div id="letterLines" class="letter-lines hidden">
+          <p>Happy Birthday, my love. ❤️</p>
+          <p>I hope you know how ridiculously special you are.</p>
+          <p>And yes...</p>
+          <p>I made this adorable little flying menace deliver your gift. 🐱🪽</p>
         </div>
 
-        <header class="song-header">
-          <h1 class="song-title-main">Okay&hellip; this one needs a soundtrack. <span aria-hidden="true">🎵</span></h1>
-          <p class="song-subtitle">If our story had a playlist,<br>these songs would probably be somewhere in it.</p>
-        </header>
+        <button id="revealLetterBtn" class="btn ghost">OPEN THE REST OF THE MESSAGE ✦</button>
+        <button id="continueBtn" class="btn primary hidden">THERE'S MORE →</button>
+      </article>
+      <img src="meowl.png" class="card-companion" alt="">
+      <p class="continued">✦ to be continued ✦</p>
+    </section>
+  </main>
 
-        <!-- ============ INTRO: illustrated cassette + press play ============ -->
-        <div class="song-intro" id="songIntro">
-          <div class="song-icon" aria-hidden="true">
-            <span class="song-icon-reel song-icon-reel-l"></span>
-            <span class="song-icon-reel song-icon-reel-r"></span>
-            <span class="song-icon-window"></span>
-          </div>
-          <p class="song-press-line">Press play?</p>
-          <button type="button" class="play-our-song-btn" id="playOurSongBtn">
-            <span aria-hidden="true">▶</span> Play Our Song
-          </button>
-        </div>
-        <!-- ============ END INTRO ============ -->
-
-        <!-- ============ MUSIC PLAYER ============
-             TO REPLACE: swap assets/our-song.mp3 for your own audio file,
-             images/song-cover.jpg for your own cover image, and edit the
-             title/artist text below — everything else keeps working. -->
-        <div class="song-player hidden" id="songPlayer">
-
-          <p class="now-playing-label hidden" id="nowPlayingLabel">
-            Currently playing <span aria-hidden="true">♡</span>
-          </p>
-
-          <div class="cassette-player">
-            <span class="cassette-tape-strip" aria-hidden="true"></span>
-
-            <div class="cassette-window">
-              <img class="cassette-cover" id="cassetteCover" src="song-cover.jpg" alt="Song cover — replace with your own">
-              <span class="cassette-reel cassette-reel-l" id="reelLeft" aria-hidden="true"></span>
-              <span class="cassette-reel cassette-reel-r" id="reelRight" aria-hidden="true"></span>
-            </div>
-
-            <div class="song-notes-float" id="songNotesFloat" aria-hidden="true"></div>
-
-            <p class="song-title" id="songTitleText">our song</p>
-            <p class="song-artist" id="songArtistText">artist name</p>
-
-            <div class="equalizer hidden" id="equalizer" aria-hidden="true">
-              <span></span><span></span><span></span><span></span><span></span>
-            </div>
-
-            <audio id="ourSongAudio" preload="metadata">
-              <source src="our-song.mp3" type="audio/mpeg">
-            </audio>
-
-            <div class="player-controls">
-              <button type="button" class="player-play-btn" id="playerPlayBtn" aria-label="Play or pause">
-                <span id="playerPlayIcon" aria-hidden="true">▶</span>
-              </button>
-
-              <div class="player-progress-wrap">
-                <span class="player-time" id="currentTimeText">0:00</span>
-                <input type="range" class="player-progress" id="playerProgress" min="0" max="100" value="0" aria-label="Seek">
-                <span class="player-time" id="durationText">0:00</span>
-              </div>
-            </div>
-
-            <div class="player-volume-wrap">
-              <span aria-hidden="true">🔈</span>
-              <input type="range" class="player-volume" id="playerVolume" min="0" max="100" value="70" aria-label="Volume">
-            </div>
-          </div>
-
-        </div>
-        <!-- ============ END MUSIC PLAYER ============ -->
-
-        <!-- ============ MEMORY CARDS ============ -->
-        <!-- ============ WHY THESE SONGS ARE OURS ============ -->
-<div class="song-cards hidden" id="songCards">
-
-  <!-- SONG CARD 1 -->
-  <div class="song-mem-card smc-1">
-
-    <span class="smc-tape smc-tape-pink" aria-hidden="true"></span>
-    <span class="smc-doodle" aria-hidden="true">♪</span>
-
-    <p class="smc-title">
-      Why this is our song
-    </p>
-
-    <p class="smc-text">
-      This song will always remind me of you because...
-    </p>
-
-    <div class="song-reason">
-      <p>
-        <!-- WRITE YOUR PERSONAL REASON HERE -->
-        Every time I hear this song, I somehow end up
-        thinking about you. Maybe it's the lyrics,
-        maybe it's the feeling, or maybe I just
-        attached you to this song without even realizing it.
-      </p>
-    </div>
-
-    <span class="song-card-label">
-      ♡ our song
-    </span>
-
-  </div>
-
-
-  <!-- SONG CARD 2 -->
-  <div class="song-mem-card smc-2">
-
-    <span class="smc-tape smc-tape-blue" aria-hidden="true"></span>
-    <span class="smc-doodle" aria-hidden="true">✿</span>
-
-    <p class="smc-title">
-      The memory behind it
-    </p>
-
-    <p class="smc-text">
-      There's a reason this song stayed with me.
-    </p>
-
-    <div class="song-reason">
-      <p>
-        <!-- WRITE YOUR PERSONAL MEMORY HERE -->
-        Maybe this was the song playing,
-        maybe we talked about it,
-        or maybe it simply became ours
-        because of everything that happened around it.
-      </p>
-    </div>
-
-    <span class="song-card-label">
-      ✿ one little memory
-    </span>
-
-  </div>
-
-
-  <!-- SONG CARD 3 -->
-  <div class="song-mem-card smc-3">
-
-    <span class="smc-tape smc-tape-gold" aria-hidden="true"></span>
-    <span class="smc-doodle" aria-hidden="true">☁</span>
-
-    <p class="smc-title">
-      The lyrics that feel like us
-    </p>
-
-    <p class="smc-text">
-      If I had to choose one part of this song...
-    </p>
-
-    <div class="song-reason">
-      <p>
-        <!-- WRITE THE LYRIC / YOUR INTERPRETATION HERE -->
-        This part always makes me think of us.
-        Not because it describes everything perfectly,
-        but because somehow it feels like something
-        I would want to say to you.
-      </p>
-    </div>
-
-    <span class="song-card-label">
-      ♪ this part ♡
-    </span>
-
-  </div>
-
-
-  <!-- SONG CARD 4 -->
-  <div class="song-mem-card smc-4">
-
-    <span class="smc-tape smc-tape-pink" aria-hidden="true"></span>
-    <span class="smc-doodle" aria-hidden="true">♡</span>
-
-    <p class="smc-title">
-      Why I'll always think of you
-    </p>
-
-    <p class="smc-text">
-      And this is probably my favourite reason.
-    </p>
-
-    <div class="song-reason">
-      <p>
-        <!-- WRITE YOUR PERSONAL MESSAGE HERE -->
-        Because now this isn't just a song anymore.
-
-        It's one of those songs that will always
-        have a little piece of you attached to it.
-      </p>
-    </div>
-
-    <span class="song-card-label">
-      ♡ forever ours
-    </span>
-
-  </div>
-
+  <div id="toast"></div>
 </div>
-<!-- ============ END WHY THESE SONGS ARE OURS ============ -->
-        <!-- ============ END MEMORY CARDS ============ -->
 
-        <!-- ============ INTERACTIVE FLIP CASSETTE ============ -->
-<div class="flip-cassette-wrap hidden" id="flipCassetteWrap">
 
-  <p class="flip-cassette-hint">
-    flip me <span aria-hidden="true">↻</span>
-  </p>
+<!-- STAGE 3: MEMORY ASSEMBLY -->
+<div id="stage3App" class="stage3-root" aria-hidden="true">
 
-  <button
-    type="button"
-    class="flip-cassette"
-    id="flipCassette"
-    aria-label="Flip the cassette"
-  >
+    <!-- decorative scrapbook details -->
+    <div class="paper-grain"></div>
+    <div class="scribble scribble-one">✦</div>
+    <div class="scribble scribble-two">♡</div>
 
-    <div class="flip-cassette-inner" id="flipCassetteInner">
+    <!-- INTRO -->
+    <section id="s3-introScreen" class="s3-screen active intro-layout">
+      <div class="corner-note note-left">top secret<br>cat business</div>
 
-      <!-- FRONT -->
-      <div class="flip-cassette-front">
-
-        <span class="fc-reel fc-reel-l"></span>
-        <span class="fc-reel fc-reel-r"></span>
-
-        <div class="fc-tape-window"></div>
-
-        <span class="fc-label">
-          OUR SONG
-        </span>
-
-        <span class="fc-small-label">
-          SIDE A ♡
-        </span>
-
+      <div class="intro-collage">
+        <div class="tape tape-a"></div>
+        <div class="polaroid intro-polaroid">
+          <img src="assets/cat1.png" class="intro-cat" alt="Meme cat">
+          <span>uh... wait a second</span>
+        </div>
+        <div class="flower-doodle">✿</div>
       </div>
 
-
-      <!-- BACK -->
-      <div class="flip-cassette-back">
-
-        <div class="fc-back-note">
-
-          <span class="fc-back-doodle">♪</span>
-
-          <p class="fc-back-line">
-            Some songs become
-            little memories.
-          </p>
-
-          <p class="fc-back-line">
-            Some memories become
-            songs.
-          </p>
-
-          <p class="fc-back-line fc-back-final">
-            And somehow...
-            <br>
-            you became a little bit
-            of both. ♡
-          </p>
-
-        </div>
-
+      <div class="editorial-copy">
+        <p class="eyebrow">FILE 03 UNLOCKED · THE CAT ARCHIVES</p>
+        <h1 id="s3-introText">WAIT.</h1>
+        <p class="subcopy">The Cat Archives have opened one final file. This one is made from memories.</p>
       </div>
 
-    </div>
+      <button id="s3-startMission" class="paper-button">
+        <span>continue the nonsense</span> →
+      </button>
+    </section>
 
-  </button>
 
-</div>
-<!-- ============ END FLIP CASSETTE ============ -->
-        <!-- ============ ENDING SEQUENCE ============ -->
-        <div class="song-ending hidden" id="songEnding">
-          <p class="song-ending-line" id="endingLine1">And that's the thing about memories&hellip;</p>
-          <p class="song-ending-line hidden" id="endingLine2">You don't always have to look at them.<br>Sometimes you just have to press play.</p>
-          <p class="song-ending-heart hidden" id="endingHeart">♡</p>
-          <button type="button" class="one-last-page-btn hidden" id="oneLastPageBtn">
-            One Last Page <span aria-hidden="true">→</span>
-          </button>
-        </div>
-        <!-- ============ END ENDING SEQUENCE ============ -->
+    <!-- ASSEMBLY -->
+    <section id="s3-missionScreen" class="s3-screen">
+      <div class="mission-top">
+        <div class="washi-label">THE CAT ARCHIVES · FILE 03</div>
+        <p class="eyebrow">A SMALL COLLECTION OF CHAOS & MEMORIES</p>
+        <h1>the memory<br><em>assembly</em> department.</h1>
+        <p id="s3-missionText" class="mission-copy">
+          Apparently the cats have been working on something.
+        </p>
+      </div>
 
-      </section>
+      <div class="assembly-layout">
+        <aside class="side-note left-note">
+          <span>01</span>
+          <p>please do not disturb the workers.</p>
+          <div class="tiny-stars">✦ ✦ ✦</div>
+        </aside>
 
-    </main>
+        <div class="assembly-wrap">
+          <div class="tape tape-board-left"></div>
+          <div class="tape tape-board-right"></div>
 
-    <!-- ===================== STAGE 10: A LETTER I WANT YOU TO KEEP ===================== -->
-    <main id="page-stage10" class="page page-stage10 hidden">
-
-      <section class="letter-outer" id="letterCard">
-
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right letter-tape-right" aria-hidden="true"></span>
-
-        <div class="story-header-doodles" aria-hidden="true">
-          <span class="mem-hdoodle mhd1">✦</span>
-          <span class="mem-hdoodle mhd2">♡</span>
-          <span class="mem-hdoodle mhd3">✧</span>
-          <span class="mem-hdoodle mhd4">✿</span>
-          <span class="mem-hdoodle mhd5">❀</span>
-        </div>
-
-        <!-- ============ INTRO: SEALED ENVELOPE ============ -->
-        <div class="envelope-intro" id="envelopeIntro">
-
-          <p class="envelope-eyebrow">I saved this one for last&hellip;</p>
-          <p class="envelope-line">Because some things deserve a letter.</p>
-
-          <div class="envelope-wrap" id="envelopeWrap">
-
-            <div class="envelope-hearts" id="envelopeHearts" aria-hidden="true"></div>
-
-            <div class="envelope" id="envelope">
-              <div class="envelope-body">
-                <p class="envelope-address">
-                  to: you <span aria-hidden="true">♡</span><br>
-                  from: me
-                </p>
-                <span class="envelope-doodle ed1" aria-hidden="true">✿</span>
-                <span class="envelope-doodle ed2" aria-hidden="true">✦</span>
-              </div>
-              <div class="envelope-flap" id="envelopeFlap">
-                <span class="heart-seal" id="heartSeal" aria-hidden="true"></span>
-              </div>
-              <div class="letter-peek" id="letterPeek" aria-hidden="true"></div>
-            </div>
+          <div id="s3-assemblyBoard" class="assembly-board">
+            <div class="board-caption">pieces of a very special person ♡</div>
+            <div id="s3-flash" class="flash"></div>
           </div>
 
-          <button type="button" class="open-letter-btn" id="openLetterBtn">
-            Open It <span aria-hidden="true">♡</span>
-          </button>
-        </div>
-        <!-- ============ END INTRO ============ -->
-
-        <!-- ============ THE LETTER ============
-             TO EDIT: everything inside #letterBody below is plain
-             text — replace it with your own message. Nothing else
-             in this file needs to change. Wrap any word you want
-             underlined in <span class="underline-word">...</span>. -->
-        <div class="letter-section hidden" id="letterSection">
-
-          <div class="letter-paper" id="letterPaper">
-
-            <span class="letter-doodle ld1" aria-hidden="true">♡</span>
-            <span class="letter-doodle ld2" aria-hidden="true">✿</span>
-            <span class="letter-doodle ld3" aria-hidden="true">✦</span>
-
-            <p class="letter-to">To you, <span aria-hidden="true">♡</span></p>
-
-            <div class="letter-body" id="letterBody">
-              <p class="letter-line">Dear you,</p>
-
-              <p class="letter-line">I don't know if I say this enough, but I'm really <span class="underline-word">grateful</span> that you exist in my life.</p>
-
-              <p class="letter-line">When I think about us, it's not just the big moments that come to mind.</p>
-
-              <p class="letter-line">It's the <span class="underline-word">tiny things</span>.</p>
-
-              <p class="letter-line">The random conversations.<br>The stupid jokes.<br>The little moments that probably didn't seem important at the time.</p>
-
-              <p class="letter-line">Somehow, those are the moments I remember the most.</p>
-
-              <p class="letter-line">You are such a special part of my life, and I hope you know how much that means to me.</p>
-
-              <p class="letter-line">I don't know exactly what every future page of our story will look like.</p>
-
-              <p class="letter-line">But I know I want there to be <span class="underline-word">more</span>.</p>
-
-              <p class="letter-line">More conversations.<br>More memories.<br>More ridiculous moments.<br>More reasons to laugh.<br>More ordinary days that somehow become special because they're ours.</p>
-
-              <p class="letter-line">So on your birthday, I just want you to know one thing:</p>
-
-              <p class="letter-line">I'm really, really glad that I have you as my sister.</p>
-
-              <p class="letter-line letter-line-emph">Happy Birthday my darling. <span aria-hidden="true">♡</span></p>
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span>ASSEMBLY STATUS</span>
+              <span id="s3-progressText">0%</span>
             </div>
-
-            <p class="letter-signature">Always,<br>me <span aria-hidden="true">♡</span></p>
-
-            <p class="letter-ps">
-              <button type="button" class="ps-trigger" id="psTrigger">P.S.</button>
-              You thought that was everything?
-            </p>
-
-            <div class="ps-note hidden" id="psNote">
-              <p>Nope. I have one more thing to show you. <span aria-hidden="true">♡</span></p>
-              <span class="ps-arrow" aria-hidden="true">↓</span>
-            </div>
-
+            <div class="progress-bar"><div id="s3-progressFill"></div></div>
           </div>
-
-          <div class="letter-ending" id="letterEnding">
-            <p class="letter-ending-line">Keep this letter somewhere.</p>
-            <p class="letter-ending-line">Come back to it whenever you need a reminder.</p>
-
-            <button type="button" class="one-more-surprise-btn hidden" id="oneMoreSurpriseBtn">
-              One More Surprise <span aria-hidden="true">→</span>
-            </button>
-          </div>
-
-        </div>
-        <!-- ============ END THE LETTER ============ -->
-
-      </section>
-
-    </main>
-
-    <!-- ===================== STAGE 11: ONE MORE THING... ===================== -->
-    <main id="page-stage11" class="page page-stage11 hidden">
-
-      <section class="hunt-outer" id="huntCard">
-
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right hunt-tape-right" aria-hidden="true"></span>
-
-        <div class="story-header-doodles" aria-hidden="true">
-          <span class="mem-hdoodle mhd1">✦</span>
-          <span class="mem-hdoodle mhd2">♡</span>
-          <span class="mem-hdoodle mhd3">✧</span>
-          <span class="mem-hdoodle mhd4">✿</span>
-          <span class="mem-hdoodle mhd5">❀</span>
         </div>
 
-        <!-- ============ INTRO: MYSTERIOUS BOX ============ -->
-        <div class="hunt-intro" id="huntIntro">
+        <aside class="side-note right-note">
+          <span>02</span>
+          <p>quality control is mostly just cats staring at things.</p>
+        </aside>
+      </div>
 
-          <p class="hunt-line hunt-line-1">Okay&hellip;</p>
-          <p class="hunt-line hunt-line-2">I lied.</p>
-          <p class="hunt-line hunt-line-3">You didn't actually reach the last surprise.</p>
+      <div id="s3-catStage" class="cat-stage"></div>
 
-          <div class="mystery-box" aria-hidden="true">
-            <div class="mystery-box-shadow"></div>
-            <div class="mystery-box-lid"></div>
-            <div class="mystery-box-body">
-              <span class="mystery-box-mark">?</span>
-            </div>
-          </div>
+      <button id="s3-assembleBtn" class="paper-button assemble-button">
+        <span>let the cats begin</span> 🐾
+      </button>
+    </section>
 
-          <p class="hunt-playful-line">There's one more thing hiding in here. <span aria-hidden="true">👀</span></p>
 
-          <button type="button" class="find-it-btn" id="findItBtn">
-            Find It <span aria-hidden="true">→</span>
-          </button>
-        </div>
-        <!-- ============ END INTRO ============ -->
+    <!-- FINAL PHOTO REVEAL -->
+    <section id="s3-revealScreen" class="s3-screen reveal-layout">
+      <div class="reveal-top">
+        <p class="eyebrow">FILE 03 COMPLETE · THE CAT ARCHIVES</p>
+        <h1>a collection of pieces<br>became something <em>beautiful.</em></h1>
+      </div>
 
-        <!-- ============ THE SEARCH SCENE ============ -->
-        <div class="hunt-scene hidden" id="huntScene">
+      <div class="memory-collage">
+        <div class="tape tape-reveal-a"></div>
+        <div class="tape tape-reveal-b"></div>
+        <div class="memory-note note-one">kept this one safe ♡</div>
+        <div class="memory-note note-two">made with love + chaos</div>
 
-          <p class="hunt-progress" id="huntProgress">Something is hidden somewhere&hellip;</p>
-          <p class="hunt-feedback" id="huntFeedback" aria-live="polite">&nbsp;</p>
-
-          <div class="hunt-objects" id="huntObjects">
-
-            <button type="button" class="hunt-obj ho-1" data-response="Not this one&hellip;">✉️</button>
-            <button type="button" class="hunt-obj ho-2" data-response="Cute memory though. ♡">🖼️</button>
-            <button type="button" class="hunt-obj ho-3" data-response="Nice try. 🌸">🌸</button>
-            <button type="button" class="hunt-obj ho-4" data-response="Pretty, but nope.">⭐</button>
-            <button type="button" class="hunt-obj ho-5" data-response="Really? Again? 😂">🎀</button>
-            <button type="button" class="hunt-obj ho-6" data-response="Aw, close but no.">💗</button>
-            <button type="button" class="hunt-obj ho-7" data-response="Wrong soundtrack.">📼</button>
-            <button type="button" class="hunt-obj ho-8" data-response="Just a doodle, silly.">〰️</button>
-            <button type="button" class="hunt-obj ho-9" data-response="Not this one either&hellip;">💌</button>
-            <button type="button" class="hunt-obj ho-10" data-response="Another cute one. ♡">📷</button>
-            <button type="button" class="hunt-obj ho-11" data-response="Still not it. 🌼">🌼</button>
-            <button type="button" class="hunt-obj ho-12" data-response="So close! (not really)">✨</button>
-            <button type="button" class="hunt-obj ho-13" data-response="Nope, try again.">🎁</button>
-
-            <!-- the key -->
-            <button type="button" class="hunt-obj hunt-key" id="huntKey" aria-label="A tiny golden key">🔑</button>
-
-            <!-- the locked box -->
-            <button type="button" class="hunt-obj hunt-locked-box" id="huntLockedBox" aria-label="A little locked box">
-              <span class="box-hint hidden" id="boxHint">Maybe this?</span>
-              <span class="locked-box-icon" id="lockedBoxIcon">
-                <span class="lb-lock" id="lbLock">🔒</span>
-                <span class="lb-body">📦</span>
-              </span>
-            </button>
-
-          </div>
-
-          <div class="key-note hidden" id="keyNote">
-            <p>Okay, you found the key.<br>Now find out what it opens.</p>
-          </div>
-
-        </div>
-        <!-- ============ END SEARCH SCENE ============ -->
-
-        <!-- ============ THE BIG REVEAL ============
-             TO EDIT: everything inside #surpriseMessage is plain
-             text — replace with whatever final surprise you want.
-             Swap images/surprise-photo.jpg for your own photo. -->
-        <div class="hunt-reveal hidden" id="huntReveal">
-
-          <div class="reveal-burst" id="revealBurst" aria-hidden="true"></div>
-
-          <div class="reveal-card" id="revealCard">
-
-            <span class="reveal-tape" aria-hidden="true"></span>
-
-            <h2 class="reveal-title">YOU FOUND IT. <span aria-hidden="true">♡</span></h2>
-            <p class="reveal-subtitle">Okay, here's the real surprise.</p>
-
-            <div class="surprise-photo-wrap" id="surprisePhotoWrap">
-              <img class="surprise-photo" src="surprise-photo.png" alt="One more memory — replace with your own photo">
-              <p class="surprise-photo-caption">one more memory for the collection <span aria-hidden="true">♡</span></p>
-            </div>
-
-            <div class="surprise-message" id="surpriseMessage">
-              <p>I wish I could put every single thing I want to give you inside this little box.</p>
-              <p>So instead, here's a promise:</p>
-              <p>I'll keep making memories with you.<br>I'll keep annoying you.<br>I'll keep laughing with you.<br>I'll keep finding reasons to celebrate you.</p>
-              <p>And I'll always be your biggest fan.</p>
-            </div>
-
-            <p class="surprise-signoff">That's your actual present. <span aria-hidden="true">♡</span></p>
-
-            <div class="hunt-joke" id="huntJoke">
-              <p class="hunt-joke-line">Okay okay&hellip;</p>
-              <p class="hunt-joke-line hidden" id="jokeLine2">NOW I'm actually done.</p>
-              <p class="hunt-joke-line hunt-joke-final hidden" id="jokeLine3">&hellip;probably. <span aria-hidden="true">😏</span></p>
-            </div>
-
-            <button type="button" class="okay-now-go-btn hidden" id="okayNowGoBtn">
-              Okay, Now Go <span aria-hidden="true">→</span>
-            </button>
-
-          </div>
-
-        </div>
-        <!-- ============ END THE BIG REVEAL ============ -->
-
-        <audio id="lockClickSound" preload="none">
-          <source src="click.mp3" type="audio/mpeg">
-        </audio>
-
-      </section>
-
-    </main>
-
-    <!-- ===================== STAGE 12: HAPPY BIRTHDAY (FINAL STAGE) ===================== -->
-    <main id="page-stage12" class="page page-stage12 hidden">
-
-      <section class="finale-outer" id="finaleCard">
-
-        <span class="tape tape-left" aria-hidden="true"></span>
-        <span class="tape tape-right finale-tape-right" aria-hidden="true"></span>
-
-        <!-- subtle replay link, tucked in the corner -->
-        <button type="button" class="replay-link" id="replayLink" aria-label="Read it again">read it again <span aria-hidden="true">↻</span></button>
-
-        <!-- ============ INTRO: CLOSED SCRAPBOOK ============ -->
-        <div class="finale-intro" id="finaleIntro">
-
-          <p class="finale-intro-line fil-1" id="filLine1">Okay&hellip;</p>
-          <p class="finale-intro-line fil-2 hidden" id="filLine2">This really is the last page.</p>
-          <p class="finale-intro-line fil-3 hidden" id="filLine3">Ready?</p>
-
-          <div class="story-book-wrap finale-book-wrap">
-            <div class="story-book" id="finaleBookGraphic">
-              <div class="book-pages-peek" aria-hidden="true"></div>
-              <div class="book-cover" id="finaleBookCover">
-                <span class="book-cover-doodle" aria-hidden="true">♡</span>
-                <span class="book-ribbon" aria-hidden="true"></span>
-                <span class="book-title-doodle" aria-hidden="true">the end?</span>
-              </div>
-            </div>
-            <div class="finale-glimpse hidden" id="finaleGlimpse" aria-hidden="true">🖼️</div>
-          </div>
-
-          <button type="button" class="open-story-btn finale-open-btn hidden" id="openFinaleBtn">
-            Open It <span aria-hidden="true">♡</span>
-          </button>
-        </div>
-        <!-- ============ END INTRO ============ -->
-
-        <!-- ============ THE FINAL PAGE ============ -->
-        <div class="finale-page hidden" id="finalePage">
-
-          <p class="finale-happy-birthday" id="finaleHB1">HAPPY BIRTHDAY <span aria-hidden="true">♡</span></p>
-          <p class="finale-big-line hidden" id="finaleHB2">TO MY FAVOURITE PERSON</p>
-
-          <p class="finale-sub-line hidden" id="finaleSub1">Today is your day.</p>
-          <p class="finale-sub-line hidden" id="finaleSub2">But I wanted to give you something a little different.</p>
-          <p class="finale-sub-line finale-sub-emph hidden" id="finaleSub3">A tiny little world made just for you.</p>
-
-          <!-- ====== MAIN PHOTO — replace images/final-photo.jpg ====== -->
-          <div class="finale-photo-wrap hidden" id="finalePhotoWrap">
-            <span class="finale-photo-tape" aria-hidden="true"></span>
-            <img class="finale-photo" src="final-photo.png" alt="Main birthday photo — replace with your own">
-          </div>
-
-          <!-- ====== BIRTHDAY MESSAGE — edit freely ====== -->
-          <div class="finale-message hidden" id="finaleMessage">
-            <p>Happy Birthday, to my favourite person. <span aria-hidden="true">♡</span></p>
-            <p>I hope you know how incredibly special you are.</p>
-            <p>I could have simply wished you a happy birthday, but somehow that didn't feel like enough.</p>
-            <p>So I made you this little place.</p>
-            <p>A place full of our memories,<br>our silly moments,<br>the things I love about you,<br>the things I want you to remember,<br>and a tiny piece of my heart.</p>
-            <p>I hope you smiled while going through it.</p>
-            <p>I hope you laughed at the silly parts.</p>
-            <p>I hope some of the memories made you stop for a second.</p>
-            <p>And most importantly, I hope you felt loved.</p>
-            <p>Because you are.</p>
-            <p class="finale-message-emph">Very, very much.</p>
-            <p class="finale-message-emph">Happy Birthday. <span aria-hidden="true">♡</span></p>
-          </div>
-
-          <!-- ====== THE CAKE ====== -->
-          <div class="finale-cake-section hidden" id="finaleCakeSection">
-            <p class="cake-prompt" id="cakePrompt">Make a wish&hellip;</p>
-
-            <button type="button" class="cake-wrap" id="cakeWrap" aria-label="Blow out the candles">
-              <span class="cake-sparkles" id="cakeSparkles" aria-hidden="true"></span>
-              <span class="candle candle-1"><span class="flame" id="flame1"></span></span>
-              <span class="candle candle-2"><span class="flame" id="flame2"></span></span>
-              <span class="candle candle-3"><span class="flame" id="flame3"></span></span>
-              <span class="cake-top"></span>
-              <span class="cake-middle"></span>
-              <span class="cake-base"></span>
-            </button>
-
-            <p class="cake-followup hidden" id="cakeFollowup1">Wish made? <span aria-hidden="true">♡</span></p>
-            <p class="cake-followup hidden" id="cakeFollowup2">Good.</p>
-            <p class="cake-followup hidden" id="cakeFollowup3">I hope it comes true.</p>
-          </div>
-
-          <!-- ====== PHOTO MEMORIES COLLAGE ====== -->
-          <div class="finale-collage-section hidden" id="finaleCollageSection">
-            <p class="finale-collage-heading">Before you go&hellip;</p>
-
-            <div class="finale-collage">
-              <div class="fc-card fc-1"><img src="memory1.jpeg" alt="A memory — replace with your own"><p>glimpse of your childhood <span aria-hidden="true">♡</span></p></div>
-              <div class="fc-card fc-2"><img src="memory2.jpeg" alt="A memory — replace with your own"><p>silly you!!</p></div>
-              <div class="fc-card fc-3"><img src="memory3.jpg" alt="A memory — replace with your own"><p>you being prettiest</p></div>
-              <div class="fc-card fc-4"><img src="memory4.png" alt="A memory — replace with your own"><p>my favorite</p></div>
-              <div class="fc-card fc-5"><img src="memory5.jpg" alt="A memory — replace with your own"><p>keep this one</p></div>
-              <div class="fc-card fc-6"><img src="surprise-photo.png" alt="A memory — replace with your own"><p>and this one too <span aria-hidden="true">♡</span></p></div>
-            </div>
-          </div>
-
-          <!-- ====== FINAL PERSONAL MESSAGE ====== -->
-          <div class="finale-closing-section hidden" id="finaleClosingSection">
-            <p class="finale-closing-heading">Before this little book closes&hellip;</p>
-            <div class="finale-closing-message">
-              <p>Thank you for being you.</p>
-              <p>Thank you for all the memories we've already made.</p>
-              <p>And thank you for all the ones we haven't made yet.</p>
-              <p>Here's to another year of you.</p>
-              <p>And hopefully&hellip;</p>
-              <p>another year of us. <span aria-hidden="true">♡</span></p>
-            </div>
-          </div>
-
-          <!-- ====== ONE LAST THING ====== -->
-          <div class="finale-lastthing-section hidden" id="finaleLastthingSection">
-            <button type="button" class="one-last-thing-btn" id="oneLastThingBtn">one last thing&hellip;</button>
-          </div>
-
-          <!-- ====== THE VERY END ====== -->
-          <div class="finale-end hidden" id="finaleEnd">
-            <p class="the-end-text">THE END</p>
-            <p class="the-end-subtext">&hellip;or maybe just another beginning. <span aria-hidden="true">♡</span></p>
-          </div>
-
-          <!-- small "play our song" control, only shown if the audio isn't already playing -->
-          <button type="button" class="mini-play-song hidden" id="miniPlaySong">
-            <span aria-hidden="true">♪</span> play our song
-          </button>
-
-        </div>
-        <!-- ============ END THE FINAL PAGE ============ -->
-
-      </section>
-
-      <!-- "one last thing" dimmed overlay note -->
-      <div class="lastthing-overlay hidden" id="lastthingOverlay">
-        <div class="lastthing-backdrop" id="lastthingBackdrop"></div>
-        <div class="lastthing-note" id="lastthingNote">
-          <span class="lastthing-tape" aria-hidden="true"></span>
-          <p class="lt-line" id="ltLine1">If I could give you anything for your birthday&hellip;</p>
-          <p class="lt-line hidden" id="ltLine2">I'd give you the ability to see yourself the way I see you.</p>
-          <p class="lt-line hidden" id="ltLine3">Maybe then you'd understand<br>just how loved you really are.</p>
-          <p class="lt-line lt-line-emph hidden" id="ltLine4">Happy Birthday, you. <span aria-hidden="true">♡</span></p>
-          <p class="lt-signature hidden" id="ltSignature">&mdash; me</p>
-          <button type="button" class="lastthing-close hidden" id="lastthingClose">close</button>
+        <div class="final-photo-frame">
+          <img id="s3-finalPhoto" src="assets/his-photo.jpeg" alt="A special memory">
+          <div class="photo-shine"></div>
         </div>
       </div>
 
-    </main>
+      <p class="cats-line">
+        the entire cat department would now like credit for this emotional achievement.
+      </p>
+
+      <button id="s3-continueLetter" class="paper-button">
+        <span>but wait...</span> there is something else 💌
+      </button>
+    </section>
+
+
+    <!-- LETTER -->
+    <section id="s3-letterScreen" class="s3-screen letter-layout">
+
+      <div class="messenger-scene">
+        <div class="postmark">SPECIAL DELIVERY<br>♡ CAT POST ♡</div>
+        <img src="assets/cat7.png" id="s3-messengerCat" alt="Messenger cat">
+
+        <button class="envelope" id="s3-envelope" aria-label="Open the letter">
+          <div class="envelope-flap"></div>
+          <div class="envelope-heart">♥</div>
+        </button>
+      </div>
+
+      <div id="s3-letterPrompt" class="messenger-copy">
+        <p class="eyebrow">ONE FINAL DELIVERY</p>
+        <h1>okay...</h1>
+        <p>this one isn't from the cats.</p>
+      </div>
+
+      <button id="s3-openLetter" class="paper-button">
+        <span>open the letter</span> ♡
+      </button>
+
+      <article id="s3-letterCard" class="letter-card" aria-live="polite">
+        <div class="letter-tape"></div>
+        <p class="letter-kicker">A LITTLE NOTE, JUST FOR YOU</p>
+        <div class="letter-title">dear you, ♡</div>
+
+        <div id="s3-messageText" class="message-text"></div>
+
+        <div class="letter-divider">
+          <span>✦</span><span>♡</span><span>✦</span>
+        </div>
+
+        <div class="voice-section">
+          <p>or, if you'd rather listen...</p>
+          <div class="voice-controls">
+            <button id="s3-readAloud" class="voice-btn">♬ read it to me</button>
+            <button id="s3-pauseResume" class="voice-btn quiet" disabled>pause</button>
+            <button id="s3-restartVoice" class="voice-btn quiet" disabled>restart</button>
+          </div>
+        </div>
+
+        <button id="s3-nextStageBtn" class="paper-button next-btn">
+          <span>one more thing</span> →
+        </button>
+      </article>
+    </section>
 
   </div>
+
+  
 
 <script src="script.js"></script>
+
+  <!-- =====================================================
+       STAGE 4 — OUR STORY ADVENTURE
+       ===================================================== -->
+  <main id="stage4App" aria-hidden="true">
+    <section class="s4-screen active" id="s4-opening">
+      <div class="s4-card">
+        <span class="s4-stamp">CLASSIFIED MEMORIES</span>
+        <p class="s4-eyebrow">WELCOME TO THE</p>
+        <h1>Archives<br><em>of Us.</em></h1>
+        <p>A highly confidential collection of memories, chaos, questionable decisions and moments I never want to forget.</p>
+        <div class="s4-cat-note">🐱 “Unfortunately, we documented everything.”</div>
+        <button class="s4-btn" id="s4OpenBtn">OPEN THE STORY →</button>
+      </div>
+    </section>
+
+    <section class="s4-screen" id="s4-map">
+      <div class="s4-head"><p class="s4-eyebrow">YOUR CURRENT LOCATION</p><h2>Our Story <em>So Far</em></h2><p>Complete each chapter to unlock the next memory.</p></div>
+      <div class="s4-path">
+        <button class="s4-node unlocked" data-s4="1">🌱<strong>01<br>How It All Began</strong><small>UNLOCKED</small></button>
+        <i></i>
+        <button class="s4-node locked" data-s4="2">😂<strong>02<br>The Chaos We Created</strong><small>LOCKED</small></button>
+        <i></i>
+        <button class="s4-node locked" data-s4="3">📸<strong>03<br>The Moments I Kept</strong><small>LOCKED</small></button>
+        <i></i>
+        <button class="s4-node locked" data-s4="4">❤️<strong>04<br>And Here We Are</strong><small>LOCKED</small></button>
+      </div>
+    </section>
+
+    <section class="s4-screen" id="s4-ch1">
+      <div class="s4-head"><p class="s4-eyebrow">CHAPTER 01</p><h2>How It <em>All Began</em></h2><p>Every story starts somewhere. Ours apparently started with these clues.</p></div>
+      <div class="s4-clues">
+        <button data-clue="0">💬<strong>The First Conversation</strong><small>click to unlock</small></button>
+        <button data-clue="1">✨<strong>The First “Wait...” Moment</strong><small>click to unlock</small></button>
+        <button data-clue="2">📸<strong>The First Memory</strong><small>click to unlock</small></button>
+      </div>
+      <div class="s4-message" id="s4-ch1msg">Choose a clue to begin the investigation. 🕵️‍♀️</div>
+      <p class="s4-cat-note">🐱 “And this is where everything started... allegedly.”</p>
+      <button class="s4-btn hidden" id="s4-finish1">THE BEGINNING IS UNLOCKED →</button>
+    </section>
+
+    <section class="s4-screen" id="s4-ch2">
+      <div class="s4-head"><p class="s4-eyebrow">CHAPTER 02</p><h2>The Chaos We <em>Created</em></h2><p>Welcome to the evidence archive. We tried to delete it. Titli said no.</p></div>
+      <div class="s4-roulette" id="s4-roulette">PRESS SPIN TO RISK EVERYTHING</div>
+      <button class="s4-btn" id="s4-spin">SPIN THE MEMORY ROULETTE 🎰</button>
+      <p class="s4-counter"><span id="s4-spinCount">0</span>/3 CHAOTIC MEMORIES UNLOCKED</p>
+      <p class="s4-cat-note">🐱 “We are legally required to show this embarrassing evidence.”</p>
+      <button class="s4-btn hidden" id="s4-finish2">CHAOS ARCHIVE COMPLETED →</button>
+    </section>
+
+    <section class="s4-screen" id="s4-ch3">
+      <div class="s4-head"><p class="s4-eyebrow">CHAPTER 03</p><h2>The Moments I <em>Kept</em></h2><p>Some memories are loud. These ones stayed quietly with me.</p></div>
+      <div class="s4-polaroids">
+        <button data-mem="0"><div>YOUR PHOTO 01</div><span>tap me</span></button>
+        <button data-mem="1"><div>YOUR PHOTO 02</div><span>tap me</span></button>
+        <button data-mem="2"><div>YOUR PHOTO 03</div><span>tap me</span></button>
+        <button data-mem="3"><div>YOUR PHOTO 04</div><span>tap me</span></button>
+      </div>
+      <div class="s4-message" id="s4-ch3msg">🐱 “Okay... no jokes for this one.”</div>
+      <button class="s4-btn hidden" id="s4-finish3">THE MEMORY WALL IS COMPLETE →</button>
+    </section>
+
+    <section class="s4-screen" id="s4-ch4">
+      <div class="s4-head"><p class="s4-eyebrow">CHAPTER 04</p><h2>And Here We <em>Are</em></h2><p>Connect the moments. See where all those tiny memories led.</p></div>
+      <div class="s4-constellation">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none"><line id="s4-l1" x1="15" y1="68" x2="34" y2="28"/><line id="s4-l2" x1="34" y1="28" x2="67" y2="38"/><line id="s4-l3" x1="67" y1="38" x2="82" y2="72"/></svg>
+        <button class="s4-dot" data-dot="1" style="left:15%;top:68%">🌱</button>
+        <button class="s4-dot locked-dot" data-dot="2" style="left:34%;top:28%">😂</button>
+        <button class="s4-dot locked-dot" data-dot="3" style="left:67%;top:38%">📸</button>
+        <button class="s4-dot locked-dot" data-dot="4" style="left:82%;top:72%">❤️</button>
+        <div class="s4-heart" id="s4-heart">♥</div>
+      </div>
+      <p id="s4-connection">Start with the beginning. 🌱</p>
+      <button class="s4-btn hidden" id="s4-finish4">SEE WHAT IT ALL MEANS →</button>
+    </section>
+
+    <section class="s4-screen" id="s4-final">
+      <div class="s4-card">
+        <p class="s4-eyebrow">THE END?</p>
+        <h2>And that's our story <em>so far.</em></h2>
+        <p>Not the whole story.</p><p>Because hopefully...</p>
+        <h3>we still have so much more to write. ❤️</h3>
+        <p class="s4-final-line">Happy Birthday to my favourite chapter. 🤍</p>
+        <button class="s4-btn" id="s4-stage5">TURN THE PAGE →</button>
+      </div>
+    </section>
+  </main>
+
+
+
+<section id="stage5" class="stage stage5 hidden" aria-hidden="true">
+<div class="s5-doodle s5-heart">♡</div><div class="s5-doodle s5-star">✦</div>
+<div id="stage5Intro" class="s5-screen">
+  <div class="s5-paper s5-intro-paper"><span class="s5-stamp">CONFIDENTIAL</span><span class="s5-file">FILE #05</span>
+    <p class="s5-label">CAT INVESTIGATION DEPARTMENT</p>
+    <h1>TOP SECRET<br><em>CAT BUSINESS</em></h1>
+    <p>The cats have been watching you...<br><br>And unfortunately for you,<br>they collected evidence. 🐱</p>
+    <div class="s5-note">“Unfortunately, we documented everything.”</div>
+    <button id="openEvidenceBtn" class="s5-btn">OPEN THE EVIDENCE →</button>
+  </div>
+</div>
+
+<div id="stage5Game" class="s5-game hidden">
+<header class="s5-header"><div><p class="s5-label">CAT INVESTIGATION FILE #05</p><h2>Evidence against<br><em>the birthday boy.</em></h2></div>
+<div class="s5-counter"><b id="evidenceCount">0</b>/<span id="totalEvidence">6</span><small>FOUND</small></div></header>
+<div class="s5-note-bar"><b>NOTE:</b> Click the suspicious cats. They may be hiding something. 👀</div>
+
+<div id="catEvidenceBoard" class="s5-board">
+  <div class="s5-cat-grid">
+    <button class="s5-cat cat1" data-photo="0"><img src="assets/cats/cat 1.png" alt="Meme cat"><i>CASE 01</i></button>
+    <button class="s5-cat cat2" data-photo="1"><img src="assets/cats/cat 2.png" alt="Meme cat"><i>CASE 02</i></button>
+    <button class="s5-cat cat3" data-photo="2"><img src="assets/cats/cat 3.png" alt="Meme cat"><i>CASE 03</i></button>
+    <button class="s5-cat cat4" data-photo="3"><img src="assets/cats/cat 4.png" alt="Meme cat"><i>CASE 04</i></button>
+    <button class="s5-cat cat5" data-photo="4"><img src="assets/cats/cat 5.png" alt="Meme cat"><i>CASE 05</i></button>
+    <button class="s5-cat cat6" data-photo="5"><img src="assets/cats/cat 6.png" alt="Meme cat"><i>CASE 06</i></button>
+  </div>
+  <div id="polaroidContainer" class="s5-polaroids"></div>
+</div>
+<div class="s5-workers">✦ Please do not disturb the workers. ✦</div>
+</div>
+
+<div id="stage5Final" class="s5-screen hidden">
+<div class="s5-paper s5-final-paper"><span class="s5-stamp">INVESTIGATION COMPLETE</span>
+<p class="s5-label">FINAL REPORT</p><p>After carefully examining all available evidence...</p>
+<h2>We have reached<br>a conclusion.</h2><div class="s5-cats">🐱 🐱 🐱 🐱 🐱</div>
+<p>This human is</p><h1><em>pretty special.</em> ♡</h1>
+<p>Also slightly suspicious.<br>But mostly very lovable.</p>
+<button id="stage5ContinueBtn" class="s5-btn">ONE LAST THING →</button></div>
+</div>
+</section>
+
+
+
+<section id="finalVideoStage" class="final-video-stage hidden"
+         aria-hidden="true" data-stage="6">
+
+  <div class="final-video-glow"></div>
+
+  <div class="final-video-wrap">
+    <p class="final-eyebrow">ONE LAST THING… ♡</p>
+
+    <h1 class="final-title">
+      A little message<br>
+      <em>just for you.</em>
+    </h1>
+
+    <p class="final-subtitle">
+      No cats. No clues. No investigation.<br>
+      Just me. ❤️
+    </p>
+
+    <div class="video-card" id="birthdayVideoCard">
+
+      <div class="video-poster" id="birthdayVideoPoster">
+        <div class="poster-heart">♡</div>
+        <p>There is one last surprise waiting for you.</p>
+
+        <button id="playBirthdayVideo"
+                class="final-play-btn"
+                type="button"
+                aria-label="Play my birthday message with sound">
+          <span aria-hidden="true">▶</span>
+          Play my message
+        </button>
+      </div>
+
+      <video
+        id="birthdayMessageVideo"
+        class="birthday-message-video"
+        controls
+        playsinline
+        preload="auto"
+        muted="false"
+        volume="1"
+        aria-label="My personal birthday video message">
+
+        <source
+          src="assets/video/my baby birthday.mp4"
+          type="video/mp4">
+
+        Your browser does not support video playback.
+      </video>
+    </div>
+
+    <div id="videoFinishedMessage"
+         class="video-finished-message hidden"
+         aria-live="polite">
+
+      <div class="kiss-mark">💋</div>
+
+      <p class="closing-script">
+        Happy Birthday to my favourite person.
+      </p>
+
+      <h2>
+        Thank you for being<br>
+        <em>you.</em> ❤️
+      </h2>
+
+      <p class="closing-small">
+        And yes… that kiss at the end was absolutely intentional. 😘
+      </p>
+
+      <div class="closing-hearts">♡ &nbsp; ♥ &nbsp; ♡</div>
+    </div>
+  </div>
+</section>
+
+
 </body>
 </html>
