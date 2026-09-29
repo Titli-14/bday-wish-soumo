@@ -820,12 +820,12 @@ document.addEventListener("DOMContentLoaded", () => {
         "This wasn't a huge moment. That's probably why it became one of my favourites."
     },
     {
-      image: "assets\\photos\\us3.jpg",
+      image: "assets\\photos\\us 3.jpg",
       message:
         "Some days pass quietly. Somehow, I still kept this one."
     },
     {
-      image: "assets\\photos\\us4.jpg",
+      image: "assets\\photos\\us 4.jpg",
       message:
         "And maybe that's what love does. It turns ordinary moments into things you never want to lose."
     }
